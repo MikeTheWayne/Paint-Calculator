@@ -26,9 +26,15 @@ public class PaintRequirement {
 		this.room = room;
 	}
 	
+	/**
+	 * Calculates the paint required.
+	 * 
+	 * @return The amount of paint required.
+	 */
 	public long calculate() {
-		// TODO Add calculation logic
-		return 0;
+		long wallArea = room.calculateWallArea();
+		
+		return paintPerSquareMetre * wallArea;
 	}
 	
 }
