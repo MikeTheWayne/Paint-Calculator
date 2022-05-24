@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.michaelwayne.room.RoomType;
@@ -32,10 +33,14 @@ public class Window extends JFrame {
 	
 	private JPanel inputDisplayPanel;
 	
+	/**
+	 * Set up the UI
+	 */
 	public Window() {
 		setupFrame();
 		setupInput();
 		setupInteraction();
+		setupOutput();
 	}
 	
 	/**
@@ -92,15 +97,48 @@ public class Window extends JFrame {
 		}
 	}
 	
+	/**
+	 * Set up buttons for user interaction.
+	 */
 	private void setupInteraction() {
+		// Set up panel
 		JPanel interactionPanel = new JPanel();
 		this.add(interactionPanel);
 		
+		// Set up button
 		final String CALCULATE_BUTTON_TEXT = "Calculate";
 		
 		JButton calculateButton = new JButton(CALCULATE_BUTTON_TEXT);
 
 		interactionPanel.add(calculateButton);
+	}
+	
+	/**
+	 * Set up output, for showing the user their calculation results.
+	 */
+	private void setupOutput() {
+		
+		// Set up panel
+		JPanel outputDisplayPanel = new JPanel();
+		
+		BoxLayout boxLayout = new BoxLayout(outputDisplayPanel, BoxLayout.Y_AXIS);
+		outputDisplayPanel.setLayout(boxLayout);
+		
+		this.add(outputDisplayPanel);
+		
+		// Set up output labels
+		String VOLUME_INTRO = "Volume: ";
+		String FLOOR_INTRO = "Floor Area: ";
+		String PAINT_INTRO = "Paint Amount: ";
+		
+		JLabel volumeLabel = new JLabel(VOLUME_INTRO);
+		JLabel floorAreaLabel = new JLabel(FLOOR_INTRO);
+		JLabel paintAmountLabel = new JLabel(PAINT_INTRO);
+		
+		outputDisplayPanel.add(volumeLabel);
+		outputDisplayPanel.add(floorAreaLabel);
+		outputDisplayPanel.add(paintAmountLabel);
+		
 	}
 	
 }
