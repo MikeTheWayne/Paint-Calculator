@@ -35,6 +35,7 @@ public class Window extends JFrame {
 	public Window() {
 		setupFrame();
 		setupInput();
+		setupInteraction();
 	}
 	
 	/**
@@ -89,6 +90,17 @@ public class Window extends JFrame {
 			// Add panel to screen
 			this.inputDisplayPanel.add(inputPanel);
 		}
+	}
+	
+	private void setupInteraction() {
+		JPanel interactionPanel = new JPanel();
+		this.add(interactionPanel);
+		
+		final String CALCULATE_BUTTON_TEXT = "Calculate";
+		
+		JButton calculateButton = new JButton(CALCULATE_BUTTON_TEXT);
+
+		interactionPanel.add(calculateButton);
 	}
 	
 }
