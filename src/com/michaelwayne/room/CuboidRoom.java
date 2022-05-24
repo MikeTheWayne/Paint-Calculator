@@ -1,5 +1,6 @@
 package com.michaelwayne.room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +27,26 @@ public class CuboidRoom extends Room {
 	public CuboidRoom(List<Long> dimensions) {
 		super(dimensions);
 
-		// TODO Deal with out of bounds issues (not enough dimensions provided)
+		final int MIN_DIMENSIONS = 3;
+		final long DEFAULT_VALUE = 0L;
 		
+		// Validate list is of correct type to have values added
+		if(dimensions.size() < MIN_DIMENSIONS
+				&& dimensions instanceof ArrayList == false) {
+			ArrayList<Long> arrayDimensions = new ArrayList<Long>();
+			arrayDimensions.addAll(dimensions);
+			
+			dimensions = arrayDimensions;
+		}
+
+		// Add in default dimensions if too few have been provided
+		for(int dimensionCount = dimensions.size();
+				dimensionCount < MIN_DIMENSIONS;
+				dimensionCount++) {
+			dimensions.add(DEFAULT_VALUE);
+		}
+		
+		// Assign values from first three items in the dimensions input
 		final int HEIGHT_INDEX = 0;
 		final int WIDTH_INDEX = 1;
 		final int DEPTH_INDEX = 2;
