@@ -47,7 +47,7 @@ public class CuboidRoomTest {
 		
 		assertEquals(room.calculateVolume(), 0);
 		assertEquals(room.calculateFloorArea(), 0);
-		assertEquals(room.calculateWallArea(), 0);
+		assertEquals(room.calculateWallArea(), 40_000_000);
 	}
 	
 }
