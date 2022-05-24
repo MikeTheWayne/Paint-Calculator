@@ -16,9 +16,10 @@ public class CuboidRoom extends Room {
 	private long depth;
 	
 	/**
-	 * Sets the three dimension parameters for the room.
+	 * Validates and sets the three dimension parameters for the room.
 	 * 
-	 * Assumes the room is a regular cuboid.
+	 * If too few dimensions have been passed into the constructor,
+	 * default values of zero are set.
 	 * 
 	 * @param height The height of the room.
 	 * @param width The width of the room.
@@ -56,22 +57,40 @@ public class CuboidRoom extends Room {
 		this.depth = dimensions.get(DEPTH_INDEX);
 	}
 
+	/**
+	 * Calculates the volume of the room.
+	 * 
+	 * @return The volume of the room.
+	 */
 	@Override
 	public long calculateVolume() {
-		// TODO Implement calculation
-		return 0;
+		return height * width * depth;
 	}
 
+	/**
+	 * Calculates the floor area of the room.
+	 * 
+	 * @return The floor area of the room.
+	 */
 	@Override
 	public long calculateFloorArea() {
-		// TODO Implement calculation
-		return 0;
+		return width * depth;
 	}
 
+	/**
+	 * Calculates the area of all walls in the room.
+	 * 
+	 * Works out the area of the width wall and the depth wall, then
+	 * multiplies the result by two, as both walls will have an
+	 * identical twin in a cuboid.
+	 * 
+	 * @return The area of all walls in the room.
+	 */
 	@Override
 	public long calculateWallArea() {
-		// TODO Implement calculation
-		return 0;
+		final int IDENTICAL_WALLS = 2;
+		
+		return IDENTICAL_WALLS * height * (width + depth);
 	}
 	
 }
