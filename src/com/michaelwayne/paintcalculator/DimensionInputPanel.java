@@ -30,7 +30,7 @@ public class DimensionInputPanel extends JPanel {
 		
 		final int MAX_INPUT_LENGTH = 18;
 		
-		this.dimensionLabel = new JLabel(dimensionName);
+		this.dimensionLabel = new JLabel("Enter " + dimensionName);
 		this.input = new JTextField(MAX_INPUT_LENGTH);
 		
 		this.add(dimensionLabel);
