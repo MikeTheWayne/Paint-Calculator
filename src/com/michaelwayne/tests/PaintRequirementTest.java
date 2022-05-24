@@ -1,5 +1,6 @@
 package com.michaelwayne.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
@@ -35,6 +36,24 @@ public class PaintRequirementTest {
 	public void testPaintRequirement_nullRoom_shouldThrow_IllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class,
 				() -> new PaintRequirement(5L, null));
+	}
+	
+	@Test
+	public void testPaintRequirement_expectedValues_shouldCalculateCorrectly() {
+		PaintRequirement paintRequirement = new PaintRequirement(5L, room);
+		
+		assertEquals(paintRequirement.calculate(), 200_800_000L);
+	}
+	
+	@Test
+	public void testPaintRequirement_zeroRoomValues_shouldCalculateCorrectly() {
+		List<Long> dimensions = Arrays.asList(4000L, 5000L);
+		
+		Room room = roomFactory.create(RoomType.CUBOID, dimensions);
+		
+		PaintRequirement paintRequirement = new PaintRequirement(5L, room);
+		
+		assertEquals(paintRequirement.calculate(), 200_000_000L);
 	}
 	
 }
