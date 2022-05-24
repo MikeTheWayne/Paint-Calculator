@@ -20,6 +20,12 @@ public class RoomFactory {
 	 * @return A room object.
 	 */
 	public Room create(RoomType roomType, List<Long> dimensions) {
+		// Set RoomType to default if null value passed in
+		if(roomType == null) {
+			roomType = RoomType.CUBOID;
+		}
+		
+		// Create appropriate room object based on input type
 		switch(roomType) {
 		case CUBOID:
 			return new CuboidRoom(dimensions);

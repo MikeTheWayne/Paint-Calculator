@@ -22,8 +22,22 @@ public abstract class Room {
 	 * 
 	 * @param dimensions The dimensions of the room.
 	 */
-	public Room(List<Long> dimensions) {		
-		// TODO Add error handling for negative or null dimensions
+	public Room(List<Long> dimensions) throws IllegalArgumentException {
+		
+		// Check dimensions array is defined
+		if(dimensions == null) {
+			throw new IllegalArgumentException("Input dimensions array is not defined! (null array)");
+		}
+		
+		// Loop through and check dimensions for invalid input
+		for(Long dimension : dimensions) {
+			if(dimension == null) {
+				throw new IllegalArgumentException("One or more input dimensions are missing!");
+			} else if(dimension < 0) {
+				throw new IllegalArgumentException("One or more input dimensions is negative!");
+			}
+		}
+		
 	}
 	
 	/**
