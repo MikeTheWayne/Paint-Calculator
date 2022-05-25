@@ -31,6 +31,7 @@ public class Window extends JFrame {
 	private RoomType selectedRoomType = RoomType.CUBOID;
 	
 	private List<DimensionInputPanel> inputPanels;
+	private DimensionInputPanel paintInputPanel;
 	
 	private JPanel inputDisplayPanel;
 
@@ -48,6 +49,7 @@ public class Window extends JFrame {
 	public Window() {
 		setupFrame();
 		setupInput();
+		setupPaintInput();
 		setupInteraction();
 		setupOutput();
 	}
@@ -107,6 +109,20 @@ public class Window extends JFrame {
 	}
 	
 	/**
+	 * Sets up the input field for paint amount
+	 */
+	private void setupPaintInput() {
+		
+		// Setup panel
+		final String PAINT_INPUT = "paint amount";
+
+		this.paintInputPanel = new DimensionInputPanel(PAINT_INPUT);
+		
+		// Add panel to screen
+		this.inputDisplayPanel.add(paintInputPanel);
+	}
+	
+	/**
 	 * Set up buttons for user interaction.
 	 */
 	private void setupInteraction() {
@@ -122,6 +138,7 @@ public class Window extends JFrame {
 		// Add listener
 		ActionListener calculateActionListener = new CalculateActionListener(
 				this.inputPanels,
+				this.paintInputPanel,
 				this.selectedRoomType,
 				this);
 		calculateButton.addActionListener(calculateActionListener);
@@ -163,7 +180,6 @@ public class Window extends JFrame {
 		this.invalidate();
 	}
 
-	
 	/**
 	 * Sets the floor area output text, and refreshes the window.
 	 * 
@@ -173,7 +189,6 @@ public class Window extends JFrame {
 		this.floorAreaLabel.setText(FLOOR_INTRO + floorArea);
 		this.invalidate();
 	}
-
 	
 	/**
 	 * Sets the paint amount output text, and refreshes the window.

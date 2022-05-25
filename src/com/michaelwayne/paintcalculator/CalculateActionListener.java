@@ -21,21 +21,30 @@ import com.michaelwayne.room.RoomType;
 public class CalculateActionListener implements ActionListener {
 	
 	private List<DimensionInputPanel> inputPanels;
+	private DimensionInputPanel paintInputPanel;
 	private RoomType roomType;
 	private Window window;
 	
 	private RoomFactory roomFactory;
 	
 	public CalculateActionListener(List<DimensionInputPanel> inputPanels,
+			DimensionInputPanel paintInputPanel,
 			RoomType roomType,
 			Window window) {
-		// Check for null parameters
+		// Check for null parameters, set default values if so
 		if(inputPanels == null) {
+			this.inputPanels = new ArrayList<DimensionInputPanel>();
+		} else {
 			this.inputPanels = inputPanels;
 		}
 		
+		if(paintInputPanel == null) {
+			this.paintInputPanel = new DimensionInputPanel("");
+		} else {
+			this.paintInputPanel = paintInputPanel;
+		}
+		
 		// Assign values
-		this.inputPanels = inputPanels;
 		this.roomType = roomType;
 		this.window = window;
 		
@@ -53,10 +62,11 @@ public class CalculateActionListener implements ActionListener {
 		
 		// Get input
 		List<Long> dimensions = this.getDimensionsFromInput();
+		long paint = this.sanitiseInput(this.paintInputPanel.getInputText());
 		
 		// Perform calculation
 		Room room = roomFactory.create(this.roomType, dimensions);
-		PaintRequirement paintRequirement = new PaintRequirement(1L, room); // TODO capture input for paint required	
+		PaintRequirement paintRequirement = new PaintRequirement(paint, room);	
 		
 		// Display calculation
 		this.window.setVolume(room.calculateVolume());
@@ -74,21 +84,37 @@ public class CalculateActionListener implements ActionListener {
 		
 		for(DimensionInputPanel inputPanel : this.inputPanels) {
 			// Read in input, replace decimal points (this will need to be improved in future)
-			String input = inputPanel.getInputText().replace(".", "");
+			String input = inputPanel.getInputText();
 			
-			long dimension = 0;
-			
-			try {
-				dimension = Long.parseLong(input);
-			} catch (NumberFormatException ex) {
-				// Simulated log output (in future this will be displayed to the user instead of logged)
-				System.out.println("Failed to process input.");
-			}
+			long dimension = this.sanitiseInput(input);
 			
 			dimensions.add(dimension);
 		}
 		
 		return dimensions;
+	}
+	
+	/**
+	 * Attempts to sanitise input and return a long.
+	 * 
+	 * @param input The input to sanitise.
+	 * @return A long value from the input, or 0 if unsuccessful.
+	 */
+	private long sanitiseInput(String input) {
+		if(input == null) {
+			return 0;
+		}
+		
+		long output = 0;
+		
+		try {
+			output = Long.parseLong(input.replace(".", ""));
+		} catch (NumberFormatException ex) {
+			// Simulated log output (in future this will be displayed to the user instead of logged)
+			System.out.println("Failed to process input.");
+		}
+		
+		return output;
 	}
 
 }
