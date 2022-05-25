@@ -1,5 +1,6 @@
 package com.michaelwayne.paintcalculator;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,14 @@ public class Window extends JFrame {
 	private List<DimensionInputPanel> inputPanels;
 	
 	private JPanel inputDisplayPanel;
+
+	private final String VOLUME_INTRO = "Volume: ";
+	private final String FLOOR_INTRO = "Floor Area: ";
+	private final String PAINT_INTRO = "Paint Amount: ";
+	
+	private JLabel volumeLabel;
+	private JLabel floorAreaLabel;
+	private JLabel paintAmountLabel;
 	
 	/**
 	 * Set up the UI
@@ -109,6 +118,13 @@ public class Window extends JFrame {
 		final String CALCULATE_BUTTON_TEXT = "Calculate";
 		
 		JButton calculateButton = new JButton(CALCULATE_BUTTON_TEXT);
+		
+		// Add listener
+		ActionListener calculateActionListener = new CalculateActionListener(
+				this.inputPanels,
+				this.selectedRoomType,
+				this);
+		calculateButton.addActionListener(calculateActionListener);
 
 		interactionPanel.add(calculateButton);
 	}
@@ -127,18 +143,46 @@ public class Window extends JFrame {
 		this.add(outputDisplayPanel);
 		
 		// Set up output labels
-		String VOLUME_INTRO = "Volume: ";
-		String FLOOR_INTRO = "Floor Area: ";
-		String PAINT_INTRO = "Paint Amount: ";
-		
-		JLabel volumeLabel = new JLabel(VOLUME_INTRO);
-		JLabel floorAreaLabel = new JLabel(FLOOR_INTRO);
-		JLabel paintAmountLabel = new JLabel(PAINT_INTRO);
+		this.volumeLabel = new JLabel(VOLUME_INTRO);
+		this.floorAreaLabel = new JLabel(FLOOR_INTRO);
+		this.paintAmountLabel = new JLabel(PAINT_INTRO);
 		
 		outputDisplayPanel.add(volumeLabel);
 		outputDisplayPanel.add(floorAreaLabel);
 		outputDisplayPanel.add(paintAmountLabel);
 		
+	}
+	
+	/**
+	 * Sets the volume output text, and refreshes the window.
+	 * 
+	 * @param volume The volume of the room.
+	 */
+	public void setVolume(long volume) {
+		this.volumeLabel.setText(VOLUME_INTRO + volume);
+		this.invalidate();
+	}
+
+	
+	/**
+	 * Sets the floor area output text, and refreshes the window.
+	 * 
+	 * @param floorArea The floor area of the room.
+	 */
+	public void setFloorArea(long floorArea) {
+		this.floorAreaLabel.setText(FLOOR_INTRO + floorArea);
+		this.invalidate();
+	}
+
+	
+	/**
+	 * Sets the paint amount output text, and refreshes the window.
+	 * 
+	 * @param paintAmount The paint amount for the room.
+	 */
+	public void setPaintAmount(long paintAmount) {
+		this.paintAmountLabel.setText(PAINT_INTRO + paintAmount);
+		this.invalidate();
 	}
 	
 }
